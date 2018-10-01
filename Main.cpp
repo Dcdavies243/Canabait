@@ -5,6 +5,8 @@
 #include <SFML/Graphics.hpp>
 
 #include "AssetManager.h"
+#include "Animation.h"
+#include "AnimationSystem.h"
 
 int main()
 {   ///------------------------
@@ -24,6 +26,32 @@ int main()
 	// Testing asset manager
 	sf::Sprite testSprite;
 	testSprite.setTexture(AssetManager::GetTexture("graphics/playerJump.png"));
+
+	sf::Sound testSound;
+	testSound.setBuffer(AssetManager::GetSoundBuffer("audio/death.wav"));
+	testSound.play();
+
+	sf::Text testFont;
+	testFont.setFont(AssetManager::GetFont("fonts/mainFont.ttf"));
+	testFont.setString("Finally");
+
+	//Testing Animation
+	AnimationSystem testAnimationSystem;
+	testAnimationSystem.SetSprite(testSprite);
+
+	Animation& testAnimation = testAnimationSystem.CreateAnimation("run");
+	testAnimation.AddFrame(AssetManager::GetTexture("graphics/playerRun1.png"));
+	testAnimation.AddFrame(AssetManager::GetTexture("graphics/playerRun2.png"));
+	testAnimation.SetLoop(true);
+	testAnimation.SetPlayBackSpeed(10.0f);
+
+	Animation&jumpAnimation = testAnimationSystem.CreateAnimation("jump");
+	jumpAnimation.AddFrame(AssetManager::GetTexture("graphics/playerjump.png"));
+
+	testAnimationSystem.Play("run");
+
+
+
 
 	///-------------------------
 	/// Game Loop
@@ -47,7 +75,9 @@ int main()
 		///-----------------------
 		/// Update
 		///-----------------------
-		sf::Time FrameTime = gameClock.restart();
+		sf::Time frameTime = gameClock.restart();
+
+		testAnimation.Update(frameTime);
 
 
 		///-----------------------
@@ -63,6 +93,7 @@ int main()
 		gameWindow.clear();
 		//Draw Everything
 		gameWindow.draw(testSprite);
+		gameWindow.draw(testFont);
 
 		//Display the window contents to the screen
 		gameWindow.display();
@@ -76,4 +107,4 @@ int main()
 	//////////////////////
 
 	return 0;
-}
+}

@@ -16,9 +16,9 @@ public:
 	//Get a texture based on a file name
 	static sf::Texture& GetTexture(std::string _fileName);
 	//Get a texture based on a file name
-	//sf::SoundBuffer& GetSoundBuffer(std::string _fileName);
+	static sf::SoundBuffer& GetSoundBuffer(std::string _fileName);
 	//Get a texture based on a file name
-	//sf::Font& GetFont(std::string _fileName);
+	static sf::Font& GetFont(std::string _fileName);
 private:
 
 	//Private Data for this class
@@ -31,8 +31,8 @@ private:
 	//List of Textures
 	std::map<std::string, sf::Texture> m_textures;
 	//List of SoundBuffers
-	std::map<std::string, sf::Texture> m_soundBuffers;
+	std::map<std::string, sf::SoundBuffer> m_soundBuffers;
 	//List of Fonts
-	std::map<std::string, sf::Texture> m_fonts;
+	std::map<std::string, sf::Font> m_fonts;
 
 };
